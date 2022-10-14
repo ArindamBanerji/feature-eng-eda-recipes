@@ -1,0 +1,32 @@
+# first yaml configuration
+
+write_file: True #turn to False to prevent from running
+base_dir: &base_dir_path !ENV ${BASEPROJDIR}
+full_config_file: !ENV ${BASEPROJDIR}\${CURPROJ}\${CURYAMLFILE}
+current_proj_dir: !ENV ${BASEPROJDIR}\${CURPROJ}
+data_dir_nm: input_data\raw
+interim_data_dir_nm: input_data\interim
+
+
+files:
+    test_data_set2: &test_data_set2 "fselect_dataset_2.csv"
+    housing_data: "housing_prices_train.csv"
+    test_data_set1: "fselect_dataset_1.csv"
+    titanic_data: "fe-cookbook-titanic.csv"
+    retail_data: "online_retail_II.xlsx"
+    interim_retail_data: "retail.csv"
+    comp_eda_file: "none.csv"
+
+project_parms:
+    use_mlxtnd: 'False'
+
+process_eda:
+    main_file: *test_data_set2
+    compre_file: "none.csv"
+    pairwise_analysis: "on"
+    show_html: "False"
+
+RandomForestConfig:
+    n_estimators: 200
+    rand_state: 39
+    max_depth: 4
