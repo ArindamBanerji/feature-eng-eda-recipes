@@ -15,6 +15,8 @@ files:
     titanic_data: "fe-cookbook-titanic.csv"
     retail_data: "online_retail_II.xlsx"
     interim_retail_data: "retail.csv"
+    ftools_sample_tr: "train_v9rqX0R.csv"
+    ftools_sample_test: "test_AbJTz2l.csv"
     comp_eda_file: "none.csv"
 
 project_parms:
