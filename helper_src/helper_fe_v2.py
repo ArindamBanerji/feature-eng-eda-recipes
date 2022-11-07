@@ -3,7 +3,12 @@ import time
 import argparse
 from pathlib import Path, PureWindowsPath
 import unittest
+import numpy as np
 import pandas as pd 
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 import importlib, inspect
 import uuid
 import img2pdf
@@ -19,6 +24,8 @@ from sklearn.linear_model import LogisticRegression
 
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS_mlxtnd
 from sklearn.feature_selection import SequentialFeatureSelector as SFS_skl
+
+import sweetviz as sv   #analyzing the dataset
 
 def proj_path_nm() :
     return (os.getenv('BASEPROJDIR') + "\\" + os.getenv('CURPROJ')) 
@@ -359,6 +366,48 @@ def remove_const_quasi_const (threshold, X_train, X_test, drop_feat) :
     print (X_train.shape, X_test.shape)
 
     return X_train, X_test, quasi_constant_feat
+
+
+# plotfeature importance for xgboost etc.
+def plot_feature_importance(importance,names,model_type):
+
+	#Create arrays from feature importance and feature names
+	feature_importance = np.array(importance)
+	feature_names = np.array(names)
+
+	#Create a DataFrame using a Dictionary
+	data={'feature_names':feature_names,'feature_importance':feature_importance}
+	fi_df = pd.DataFrame(data)
+
+	#Sort the DataFrame in order decreasing feature importance
+	fi_df.sort_values(by=['feature_importance'], ascending=False,inplace=True)
+
+	#Define size of bar plot
+	plt.figure(figsize=(10,8))
+	#Plot Searborn bar chart
+	sns.barplot(x=fi_df['feature_importance'], y=fi_df['feature_names'])
+	#Add chart labels
+	plt.title(model_type + 'FEATURE IMPORTANCE')
+	plt.xlabel('FEATURE IMPORTANCE')
+	plt.ylabel('FEATURE NAMES')
+
+
+def gen_swviz_eda_from_fnm(filenm, pairwise_analysis ) :
+    
+    # read in data_set 
+    data = read_df_from_file (filenm,
+                              set_nrows=False, nrws=0 ) 
+    print ("swiz data shape:", data.shape) 
+        
+    return sv.analyze(data, pairwise_analysis=pairwise_analysis) # create the report
+
+
+def gen_swviz_eda_from_dataframe( data, pairwise_analysis ) :
+    
+    layout = 'vertical'
+    scale = 1.25
+    
+    return sv.analyze(data, pairwise_analysis=pairwise_analysis) # create the report
 
 
 class TestHelperFe(unittest.TestCase):

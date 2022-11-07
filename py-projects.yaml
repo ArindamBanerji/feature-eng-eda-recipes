@@ -1,4 +1,4 @@
-# first yaml configuration
+# yaml configuration for feature engineering recipes
 
 write_file: True #turn to False to prevent from running
 base_dir: &base_dir_path !ENV ${BASEPROJDIR}
@@ -7,7 +7,7 @@ current_proj_dir: !ENV ${BASEPROJDIR}\${CURPROJ}
 data_dir_nm: input_data\raw
 interim_data_dir_nm: input_data\interim
 
-
+# list of file names used for eda etc - from raw or prcessed
 files:
     test_data_set2: &test_data_set2 "fselect_dataset_2.csv"
     housing_data: "housing_prices_train.csv"
@@ -17,8 +17,11 @@ files:
     interim_retail_data: "retail.csv"
     ftools_sample_tr: "train_v9rqX0R.csv"
     ftools_sample_test: "test_AbJTz2l.csv"
+    heart_disease: "heart_disease.csv"
+    california_housing: "cali_housing.csv"
     comp_eda_file: "none.csv"
 
+# various lib names &other parms 
 project_parms:
     use_mlxtnd: 'False'
 
